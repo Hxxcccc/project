@@ -12,7 +12,7 @@
     {
       "menu_id": "1",
       "menu_name": "首页",
-      "menu_param": "0",
+      "menu_param": "/firstPage/content",
       "menu_font_color": "#459d36",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -37,7 +37,7 @@
     {
       "menu_id": "408",
       "menu_name": "服饰城",
-      "menu_param": "",
+      "menu_param": "/firstPage/dogFoods",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -62,7 +62,7 @@
     {
       "menu_id": "367",
       "menu_name": "狗狗主粮",
-      "menu_param": "123",
+      "menu_param": "/firstPage/dogFoods",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -87,7 +87,7 @@
     {
       "menu_id": "368",
       "menu_name": "医疗保健",
-      "menu_param": "125",
+      "menu_param": "/firstPage/dogFoods",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -112,7 +112,7 @@
     {
       "menu_id": "369",
       "menu_name": "零食玩具",
-      "menu_param": "131",
+      "menu_param": "/firstPage/dogFoods",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -137,7 +137,7 @@
     {
       "menu_id": "370",
       "menu_name": "日用外出",
-      "menu_param": "134",
+      "menu_param": "/firstPage/dogFoods",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {
@@ -162,7 +162,7 @@
     {
       "menu_id": "371",
       "menu_name": "美容香波",
-      "menu_param": "140",
+      "menu_param": "/firstPage/clothing",
       "menu_font_color": "#e73f85",
       "menu_line_color": "#459d36",
       "menu_icon": {

@@ -3,24 +3,24 @@
     <div class="content">
       <router-view></router-view>
     </div>
-    <ul class="footerNav border-1px">
+    <ul class="footerNav border-1px" ref="ul">
       <li class="firstPage">
-        <router-link to="/firstPage">
+        <router-link to="/firstPage"  @click.stop="">
           <span></span>
         </router-link>
       </li>
       <li class="classify">
-        <router-link to="/classify">
+        <router-link to="/classify"  @click.stop="">
           <span></span>
         </router-link>
       </li>
       <li class="shopping">
-        <router-link to="/shopping">
+        <router-link to="/shopping" @click.stop="">
           <span></span>
         </router-link>
       </li>
       <li class="userCenter">
-        <router-link to="/userCenter">
+        <router-link to="/userCenter"  @click.stop="">
           <span></span>
         </router-link>
       </li>
@@ -33,6 +33,10 @@
   export default {
     name: 'app',
     mounted () {
+//      this.$refs.ul.addEventListener('touchstart', function (e) {
+//        e = e || event
+//        e.preventDefault()
+//      })
       this.$store.dispatch('reqDogMessage')
     }
   }
@@ -55,6 +59,10 @@
         float left
         width: 25%
         height: 2rem
+        >a
+          display inline-block
+          width 100%
+          height 100%
         &.firstPage
           text-align center
           span
