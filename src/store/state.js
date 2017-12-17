@@ -2,5 +2,6 @@
 export default {
   dogs: {},
   surprise: {},
-  dogFoods: {}
+  dogFoods: {},
+  classify: {}
 }

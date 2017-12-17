@@ -152,7 +152,6 @@
           })
           list.splice(list.length-1,1)
           let threeImg = list[1]
-          console.log(threeImg);
           list.splice(0,2)
           let carouselImgs = this.dogs.datas.filter((item) => {
             return item.index == '1347'

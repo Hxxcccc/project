@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS} from './types'
+import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS, REQ_CLASSIFY} from './types'
 
 export default {
   reqDogMessage ({commit}, callback) {
@@ -30,6 +30,17 @@ export default {
         if (result.code === 0) {
           const dogFoods = result.data
           commit(REQ_DOG_FOODS, {dogFoods})
+          callback && callback()
+        }
+      })
+  },
+  reqClassify ({commit}, callback) {
+    axios.get('/api/classify')
+      .then((response) => {
+        const result = response.data
+        if (result.code === 0) {
+          const classify = result.data
+          commit(REQ_CLASSIFY, {classify})
           callback && callback()
         }
       })

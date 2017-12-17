@@ -27,44 +27,16 @@
         </div>
         <div class="findNav" ref="findNav">
           <ul class="findNavList">
-            <li v-for="(menu, index) in dogs.menus" :key="index">
+            <li v-for="(menu, index) in dogs.menus" :key="index" @click="setClass(index)">
               <router-link :to=menu.menu_param>
-                <span class="rela">
+                <span :class="classList[index]?'rela':''">
                   <span>{{menu.menu_name}}</span>
-                  <span></span>
+                  <span class="line"></span>
                 </span>
               </router-link>
             </li>
           </ul>
         </div>
-        <!--<div class="switchtype">
-          <div type="dog" class="go-dog pointer dog"></div>
-          <div class="changepop bgfff">
-            <div class="cartc-bg db"></div>
-            <div class="cartc-box rela overflow" style="overflow: hidden; display: block;">
-              <div class="main"><p class="ftc c999 ft16 rela">DOG<b class="b-line c000 ft12">▁</b></p>
-                <p class="ftc mt20 ft20 c666">亲爱的小主</p>
-                <p class="ftc c333 ft20">您即将进入<span>狗狗站</span></p>
-                <ul class="clearfix ftc change-ul">
-                  <li type="cat" class="fl pet1 cat"><img
-                    src="//static.epetbar.com/static_web/wap/src/images/change-cat.png">
-                    <div class="pet1name">猫猫站</div>
-                  </li>
-                  <li type="dog" class="fl pet2 mainpet rela dog"><img
-                    src="//static.epetbar.com/static_web/wap/src/images/change-dog1.png">
-                    <div>狗狗站</div>
-                    <b class="current-line c000 ft12">▁</b> <a href="javascript:;"
-                                                               class="cfff ft14 ftc once-into mt15 dib">立即进入</a></li>
-                  <li type="fish" class="fl pet3 fish"><img
-                    src="//static.epetbar.com/static_web/wap/src/images/change-fish.png">
-                    <div class="pet3name">水族站</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <a href="javascript:;" class="cartc-close afff ft20 ftc c666"><img
-              src="//static.epetbar.com/static_web/wap/src/images/close2.png"></a></div>
-        </div>-->
       </header>
       <keep-alive>
         <router-view></router-view>
@@ -77,14 +49,30 @@
   import {mapState} from 'vuex'
   import BScroll from 'better-scroll'
   export default {
+    data () {
+      return {
+        classList: [true, false, false, false, false, false, false]
+      }
+    },
     mounted () {
-      this.$router.push('/firstPage/dogFoods')
+      this.$router.push('/firstPage/content')
       this.$nextTick(() => {
         new BScroll(this.$refs.findNav, {
           click: true,
           scrollX:true
         })
       })
+    },
+    methods: {
+      setClass (cIndex) {
+        this.classList = this.classList.map((flag, index) => {
+          if (index == cIndex) {
+            return true
+          } else {
+            return false
+          }
+        })
+      },
     },
     computed: {
       ...mapState(['dogs', 'surprise'])
@@ -180,5 +168,18 @@
               line-height .6rem
               font-size .6rem
               color #666
+            .rela
+              position relative
+              >span
+                color #459d36
+                &.line
+                  position absolute
+                  bottom -.2rem
+                  left 0
+                  font-size 0
+                  width 100%
+                  height .1rem
+                  background #459d36
+
 </style>
 

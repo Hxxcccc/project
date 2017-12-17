@@ -1,6 +1,5 @@
 <template>
-  <div class="firstPageClothing" v-if="dogFoods.datas">
-    <scroller>
+  <div class="firstPageClothing" v-if="dogFoods.datas" ref="dogFoods">
       <div>
         <div class="title">
           <img :src="dogFoods.datas[0].value[0].image">
@@ -24,51 +23,52 @@
         <div class="space"></div>
         <my-line/>
         <threefold :threefold="dogFoods.datas[dogFoods.datas.length-2].content_images"/>
-        <div class="goodslist">
-          <div class="scroll-block border-1px" ref="scrollblock">
-            <ul class="brands-list" ref="brandsList">
-              <li v-for="(menu, index) in dogFoods.datas[dogFoods.datas.length-1].menus" :key="index" @click="setList(menu.menu_param)">
-                <div class="pro-block">
-                  <a href="javascript:;">{{menu.menu_name}}</a>
+        <div class="goodslist" ref="goodslist">
+          <div>
+            <div class="scroll-block border-1px" ref="scrollBlock">
+              <ul class="brands-list" ref="brandsList">
+                <li v-for="(menu, index) in dogFoods.datas[dogFoods.datas.length-1].menus" :key="index" @click="setList(menu.menu_param, index)">
+                  <div :class="classList[index]?'pro-block':''">
+                    <a href="javascript:;">{{menu.menu_name}}</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <ul class="list_libox" v-if="setListParam">
+              <li v-for="(li, index) in setListParam">
+                <div class="index-listimg">
+                  <a href="javascript:;">
+                    <img class="image" :src="li.photo">
+                    <div class="coutryimg">
+                      <img :src="li.country_photo">
+                    </div>
+                  </a>
+                </div>
+                <div class="index-listpro">
+                  <a href="javascript:;">
+                    <h1>
+                      <span>{{li.subject}}</span>
+                    </h1>
+                  </a>
+                  <div>
+                  <span class="cprice">
+                    <span>¥</span>{{li.sale_price}}
+                  </span>
+                    <span class="tprice">{{li.dprice}}</span>
+                  </div>
+                  <div class="rating">
+                    <span>{{li.comments}}</span>
+                    <span>{{li.sold}}</span>
+                  </div>
+                </div>
+                <div class="addcart">
+                  <img src="//static.epetbar.com/static_web/wap/src/images/addcart.png">
                 </div>
               </li>
             </ul>
           </div>
-          <ul class="list_libox" v-if="setListParam">
-            <li v-for="(li, index) in setListParam">
-              <div class="index-listimg">
-                <a href="javascript:;">
-                  <img class="image" :src="li.photo">
-                  <div class="coutryimg">
-                    <img :src="li.country_photo">
-                  </div>
-                </a>
-              </div>
-              <div class="index-listpro">
-                <a href="javascript:;">
-                  <h1>
-                    <span>{{li.subject}}</span>
-                  </h1>
-                </a>
-                <div>
-                  <span class="cprice">
-                    <span>¥</span>{{li.sale_price}}
-                  </span>
-                  <span class="tprice">{{li.dprice}}</span>
-                </div>
-                <div class="rating">
-                  <span>{{li.comments}}</span>
-                  <span>{{li.sold}}</span>
-                </div>
-              </div>
-              <div class="addcart">
-                <img src="//static.epetbar.com/static_web/wap/src/images/addcart.png">
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
-    </scroller>
   </div>
 </template>
 
@@ -82,12 +82,15 @@
     data () {
       return {
         isShow: [true, false, false, false],
-        param: 5
+        param: 5,
+        classList: [true, false, false, false, false, false]
       }
     },
     mounted () {
       this.$store.dispatch('reqDogFoods', this.getScroll)
-
+      if(this.dogFoods.datas){
+        this.setScroll()
+      }
     },
     methods: {
       getCategory (cIndex) {
@@ -100,16 +103,43 @@
         })
       },
       getScroll () {
-        this.$nextTick(() => {
-          new BScroll(this.$refs.scrollblock, {
-            click: true,
-            scrollX: true,
-            tap: true
+        if (!this.scrollX) {
+          this.$nextTick(() => {
+            this.scrollX = new BScroll(this.$refs.scrollBlock, {
+              click: true,
+              scrollX: true
+            })
           })
+        }
+      },
+      setList (param, cIndex) {
+        this.param = param
+        this.classList = this.classList.map((flag, index) => {
+          if (index == cIndex) {
+            return true
+          } else {
+            return false
+          }
         })
       },
-      setList (param) {
-        this.param = param
+      setScroll () {
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.dogFoods, {
+            click: true,
+            probeType: 3,
+            scrollbar: true
+          })
+          this.scroll.on('scroll', (event) => {
+            //假设头部高度为80PX, 不想再去通信了~~~
+            if(this.$refs.goodslist.getBoundingClientRect().top<= 80){
+              this.$refs.scrollBlock.className = 'scroll-block border-1px floatBanner'
+              this.$refs.scrollBlock.style.top =  -event.y + 'px'
+            }else {
+              this.$refs.scrollBlock.className = 'scroll-block border-1px'
+              this.$refs.scrollBlock.style.top = 0
+            }
+          })
+        })
       }
     },
     computed: {
@@ -128,12 +158,19 @@
         }
       },
       scrollY () {
-        console.log(this.$refs.brandsList.offsetY);
+        console.log(this.$refs.brandsList);
       }
     },
     components: {
       'my-line': line,
       threefold
+    },
+    watch: {
+      dogFoods () {
+        if(this.dogFoods.datas && !this.scroll){
+          this.setScroll()
+        }
+      }
     }
   }
 </script>
@@ -195,6 +232,13 @@
         width: 100%
         padding .4rem 0
         bottomBorder-1px(#e7e7e7)
+        &.floatBanner
+          position fixed
+          left 0
+          background #fff
+          width 100%
+          z-index 200
+          box-shadow 2px 2px 2px #e9e9e9
         .brands-list
           clearFix()
           width 24rem
@@ -212,6 +256,10 @@
               background #f5f5f5
               text-align center
               font-size .5rem
+              &.pro-block
+                border 1px solid red
+                >a
+                  color red
               > a
                 display inline-block
                 width 100%
