@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>ele</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      (function () {
+        let style = document.createElement('style')
+        let width = document.documentElement.clientWidth / 16
+        style.innerHTML = 'html{font-size:' + width + 'px!important}'
+        document.head.appendChild(style)
+      })()
+    </script>
+  </body>
+</html>

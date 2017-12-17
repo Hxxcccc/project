@@ -1,0 +1,115 @@
+{
+  "msg": "",
+  "code": "succeed",
+  "login_status": 0,
+  "mall_uid": "epet_0",
+  "mall_user": "",
+  "sys_time": 1513427649,
+  "hash": "",
+  "epet_site": "epet",
+  "data": {
+    "3": {
+      "index": "3",
+      "is_show": 1,
+      "type": "8",
+      "is_dynamic": "1",
+      "type_name": "天天惊喜模板",
+      "title": "距离下一场",
+      "time": 1513429200,
+      "goods": [
+        {
+          "image": {
+            "image": "https://img1.epetbar.com/2017-10/16/14/bf0dcc3caa53190eba5b187a25e68b9a.jpg",
+            "img_size": "165x165"
+          },
+          "sale_price": "1.99",
+          "little_price": "省￥17.91",
+          "gid": "150523",
+          "presubject": "",
+          "target": {
+            "mode": "miaosha",
+            "param": {
+              "title": "每日疯抢"
+            }
+          },
+          "vip": {}
+        },
+        {
+          "image": {
+            "image": "https://img1.epetbar.com/2016-05/25/10/33271c307f4f722842bc4eab7cc266d7.jpg",
+            "img_size": "165x165"
+          },
+          "sale_price": "1.30",
+          "little_price": "省￥11.70",
+          "gid": "105272",
+          "presubject": "",
+          "target": {
+            "mode": "miaosha",
+            "param": {
+              "title": "每日疯抢"
+            }
+          },
+          "vip": {}
+        },
+        {
+          "image": {
+            "image": "https://img1.epetbar.com/2015-06/13/49028276f011f5bf4aa00ef5d2dc580e.jpg",
+            "img_size": "165x165"
+          },
+          "sale_price": "3.30",
+          "little_price": "省￥29.70",
+          "gid": "156934",
+          "presubject": "",
+          "target": {
+            "mode": "miaosha",
+            "param": {
+              "title": "每日疯抢"
+            }
+          },
+          "vip": {}
+        },
+        {
+          "image": {
+            "image": "https://img1.epetbar.com/2016-01/25/16/9811dd2f3a1c18116c52dd89ea831ac0.jpg",
+            "img_size": "165x165"
+          },
+          "sale_price": "3.50",
+          "little_price": "省￥31.50",
+          "gid": "141949",
+          "presubject": "",
+          "target": {
+            "mode": "miaosha",
+            "param": {
+              "title": "每日疯抢"
+            }
+          },
+          "vip": {}
+        }
+      ],
+      "right_image": {
+        "image": "https://img2.epetbar.com/nowater/2017-12/13/10/bc4f0db8483e9084f5923cb92bfe2b7a.jpg",
+        "img_size": "120x110",
+        "target": {
+          "mode": "surprise",
+          "param": {
+            "title": "每日疯抢"
+          }
+        }
+      },
+      "surprise_icon": {
+        "image": "https://static.epetbar.com/static_wap/appmall/main/new_index_icon_suprice.png?version=03",
+        "img_size": "146x33",
+        "target": {}
+      }
+    }
+  },
+  "is_dynamic": 1,
+  "real_page_id": "0",
+  "cdn_info": {
+    "cache_key": "0",
+    "cdn_version": "20171215193306",
+    "url": "/index/main.html"
+  },
+  "push_alias": "appmall_",
+  "push_tags": "version358,"
+}

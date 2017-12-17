@@ -1,0 +1,5 @@
+
+export default {
+  dogs: {},
+  surprise: {}
+}
