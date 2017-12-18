@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <div class="classifyContent" v-if="classify">
-      <div class="leftBar" ref="leftBar">
-        <ul class="leftBarList">
-          <li v-for="(category, index) in classify.categorys" :key="index" @click="getCateList(index)" :class="classList[index]?'active':''">
-            {{category.name}}
-          </li>
-        </ul>
-      </div>
-      <div class="rightContent" ref="rightContent">
+  <div class="classifyContent" v-if="classify">
+    <div class="leftBar" ref="leftBar">
+      <ul class="leftBarList">
+        <li v-for="(category, index) in classify.categorys" :key="index" @click="getCateList(index)" :class="classList[index]?'active':''">
+          {{category.name}}
+        </li>
+      </ul>
+    </div>
+    <div class="rightContent" ref="rightContent">
+      <div>
         <cargo :cateList="classify['cate_list'+cateListIndex]"/>
       </div>
     </div>
@@ -30,9 +30,7 @@
     },
     mounted () {
       if(this.classify){
-        setTimeout(() => {
-          this.setScroll()
-        }, 1000)
+        this.setScroll()
       }
     },
     methods: {
@@ -59,6 +57,13 @@
     },
     components: {
       cargo
+    },
+    watch: {
+      classify () {
+        if(this.classify && !this.scroll){
+          this.setScroll()
+        }
+      }
     }
   }
 </script>
@@ -66,12 +71,14 @@
 <style lang="stylus" rel="stylesheet/stylus">
   @import '../../common/stylus/mixin.styl'
   .classifyContent
+    position absolute
+    top 1.7rem
+    left 0
+    right 0
+    bottom 2rem
     .leftBar
-      position absolute
-      top 0
-      left 0
-      bottom 0
       width 3.5rem
+      height 100%
       .leftBarList
         width 100%
         >li

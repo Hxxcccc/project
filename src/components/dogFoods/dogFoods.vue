@@ -116,12 +116,14 @@
           })
           this.scroll.on('scroll', (event) => {
             //假设头部高度为80PX, 不想再去通信了~~~
-            if(this.$refs.goodslist.getBoundingClientRect().top<= 80){
-              this.$refs.scrollBlock.className = 'scroll-block border-1px floatBanner'
-              this.$refs.scrollBlock.style.top =  -event.y + 'px'
-            }else {
-              this.$refs.scrollBlock.className = 'scroll-block border-1px'
-              this.$refs.scrollBlock.style.top = 0
+            if (this.$refs.goodslist) {
+              if(this.$refs.goodslist.getBoundingClientRect().top<= 80){
+                this.$refs.scrollBlock.className = 'scroll-block border-1px floatBanner'
+                this.$refs.scrollBlock.style.top =  -event.y + 'px'
+              }else {
+                this.$refs.scrollBlock.className = 'scroll-block border-1px'
+                this.$refs.scrollBlock.style.top = 0
+              }
             }
           })
         })

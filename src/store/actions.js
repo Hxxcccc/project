@@ -1,4 +1,5 @@
 import axios from 'axios'
+import sendCode from '../api/sms_util'
 import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS, REQ_CLASSIFY} from './types'
 
 export default {
@@ -45,5 +46,14 @@ export default {
         }
       })
   },
+  reqVerificationCode ({commit}) {
 
+    sendCode('17688317990')
+      .then(request => {
+        console.log(request);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 }

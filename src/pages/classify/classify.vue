@@ -41,7 +41,7 @@
     height 1.7rem
     text-align center
     background #fff
-    a
+    >a
       position relative
       margin 0 .8rem
       font-size .6rem

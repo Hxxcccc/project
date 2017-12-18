@@ -3,16 +3,14 @@
     <section id="firstPage">
       <header class="header border-1px">
         <div class="headerNav">
-          <router-link to="/firstPage/getCity">
-            <div class="headerTitle">
-              <a href="javascript:;">
-                <span>狗狗站</span>
-                <span>|</span>
-                <span class="city">重庆</span>
-                <span class="headerTitleIcon"></span>
-              </a>
-            </div>
-          </router-link>
+          <div class="headerTitle">
+            <a href="javascript:;">
+              <span>狗狗站</span>
+              <span>|</span>
+              <span class="city">重庆</span>
+              <span class="headerTitleIcon"></span>
+            </a>
+          </div>
           <div class="headerSearch">
             <p class="search-text">
               <a href="javascript:;">
@@ -38,7 +36,9 @@
           </ul>
         </div>
       </header>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </section>
   </div>
 </template>

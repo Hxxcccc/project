@@ -7,6 +7,8 @@ import {Swipe, SwipeItem} from 'mint-ui'
 import './mock/mock'
 import './common/resetCss/reset.css'
 import './common/stylus/base.styl'
+import './common/stylus/verify.css'
+
 
 Vue.use(VueScroller)
 Vue.component(Swipe.name, Swipe);
