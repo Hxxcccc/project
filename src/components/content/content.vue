@@ -172,7 +172,7 @@
     },
     watch: {
       surprise () {
-        if(!this.scroll){
+        if(this.surprise && !this.scroll){
           this.$nextTick(() => {
             this.scroll = new BScroll(this.$refs.surprise, {
               click: true,

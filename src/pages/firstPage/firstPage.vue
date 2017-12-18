@@ -38,9 +38,7 @@
           </ul>
         </div>
       </header>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </section>
   </div>
 </template>
@@ -56,12 +54,14 @@
     },
     mounted () {
       this.$router.push('/firstPage/content')
-      this.$nextTick(() => {
-        new BScroll(this.$refs.findNav, {
-          click: true,
-          scrollX:true
+      if (this.dogs.menus) {
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.findNav, {
+            click: true,
+            scrollX:true
+          })
         })
-      })
+      }
     },
     methods: {
       setClass (cIndex) {
@@ -76,7 +76,8 @@
     },
     computed: {
       ...mapState(['dogs', 'surprise'])
-    }
+    },
+
   }
 </script>
 

@@ -6,10 +6,13 @@ import classify from '../pages/classify/classify.vue'
 import userCenter from '../pages/userCenter/userCenter.vue'
 import content from '../components/content/content.vue'
 import dogFoods from '../components/dogFoods/dogFoods.vue'
+import category from '../components/category/category.vue'
+import brand from '../components/brand/brand.vue'
 
 Vue.use(VueRouter)
 
 export default new VueRouter({
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -35,7 +38,17 @@ export default new VueRouter({
     },
     {
       path: '/classify',
-      component: classify
+      component: classify,
+      children: [
+        {
+          path: 'category',
+          component: category
+        },
+        {
+          path: 'brand',
+          component: brand
+        }
+      ]
     },
     {
       path: '/userCenter',

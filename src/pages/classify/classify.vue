@@ -1,50 +1,23 @@
 <template>
-  <div id="classify">
+  <div id="classifyHome">
     <div class="header border-1px">
-      <span>分类</span>
-      <span>品牌</span>
+      <router-link to="/classify/category">分类 <span></span></router-link>
+      <router-link to="/classify/brand">品牌<span></span></router-link>
       <a class="search" href="javascript:;"></a>
     </div>
-    <div class="classifyContent">
-      <div class="leftBar" ref="leftBar">
-        <ul class="leftBarList">
-          <li v-for="(category, index) in classify.categorys" :key="index">
-            {{category.name}}
-          </li>
-        </ul>
-      </div>
-      <div class="rightContent">
-
-      </div>
-    </div>
+    <router-view :classify="classify"></router-view>
   </div>
 </template>
-
 <script>
   import {mapState} from 'vuex'
-  import BScroll from 'better-scroll'
 
   export default {
     mounted () {
-      this.$store.dispatch('reqClassify')
-      if(this.classify.categorys){
-        this.setScroll()
-      }
+      this.$store.dispatch('reqClassify', this.jumpTo)
     },
     methods: {
-      setScroll () {
-        this.$nextTick(() => {
-          this.scroll = new BScroll(this.$refs.leftBar, {
-            click: true
-          })
-        })
-      }
-    },
-    watch: {
-      classify () {
-        if(this.classify.categorys && !this.scroll){
-          this.setScroll()
-        }
+      jumpTo () {
+        this.$router.push('/classify/category')
       }
     },
     computed: {
@@ -55,10 +28,11 @@
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import '../../common/stylus/mixin.styl'
-  #classify
+  #classifyHome
     position relative
     width 100%
     height 100%
+    background #f3f4f5
   .header
     bottomBorder-1px(#cbcbcb)
     position relative
@@ -67,9 +41,21 @@
     height 1.7rem
     text-align center
     background #fff
-    span
-      padding   0 .8rem
+    a
+      position relative
+      margin 0 .8rem
       font-size .6rem
+      font-weight 500
+      color #000
+      &.active
+        color #ed4044
+        >span
+          position absolute
+          bottom -.4rem
+          left -0.1rem
+          width 100%
+          height 2px
+          background #ed4044
     .search
       float right
       margin-top .5rem
@@ -78,25 +64,5 @@
       height .7rem
       background url("../firstPage/search.png") no-repeat
       background-size 100%
-  .classifyContent
-    position absolute
-    top 1.7rem
-    left 0
-    bottom 2rem
-    right 0
-    .leftBar
-      position absolute
-      top 0
-      left 0
-      bottom 0
-      width 3.5rem
-      .leftBarList
-        width 100%
-        >li
-          bottomBorder-1px(#f3f4f5)
-          height .6rem
-          padding .7rem 0
-          text-align center
-          font-size .6rem
-          line-height .6rem
+
 </style>

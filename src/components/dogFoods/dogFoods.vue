@@ -88,9 +88,6 @@
     },
     mounted () {
       this.$store.dispatch('reqDogFoods', this.getScroll)
-      if(this.dogFoods.datas){
-        this.setScroll()
-      }
     },
     methods: {
       getCategory (cIndex) {
@@ -111,18 +108,6 @@
             })
           })
         }
-      },
-      setList (param, cIndex) {
-        this.param = param
-        this.classList = this.classList.map((flag, index) => {
-          if (index == cIndex) {
-            return true
-          } else {
-            return false
-          }
-        })
-      },
-      setScroll () {
         this.$nextTick(() => {
           this.scroll = new BScroll(this.$refs.dogFoods, {
             click: true,
@@ -139,6 +124,16 @@
               this.$refs.scrollBlock.style.top = 0
             }
           })
+        })
+      },
+      setList (param, cIndex) {
+        this.param = param
+        this.classList = this.classList.map((flag, index) => {
+          if (index == cIndex) {
+            return true
+          } else {
+            return false
+          }
         })
       }
     },
@@ -164,13 +159,6 @@
     components: {
       'my-line': line,
       threefold
-    },
-    watch: {
-      dogFoods () {
-        if(this.dogFoods.datas && !this.scroll){
-          this.setScroll()
-        }
-      }
     }
   }
 </script>
