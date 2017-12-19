@@ -3,5 +3,7 @@ export default {
   dogs: {},
   surprise: {},
   dogFoods: {},
-  classify: {}
+  classify: {},
+  users: {},
+  allGoods: {}
 }

@@ -1,27 +1,43 @@
 <template>
-  <div id="classifyHome">
-    <div class="header border-1px">
-      <router-link to="/classify/category">分类 <span></span></router-link>
-      <router-link to="/classify/brand">品牌<span></span></router-link>
-      <a class="search" href="javascript:;"></a>
+  <div>
+    <div id="classifyHome" v-show="isShow">
+      <div class="header border-1px">
+        <router-link to="/classify/category">分类 <span></span></router-link>
+        <router-link to="/classify/brand">品牌<span></span></router-link>
+        <a class="search" href="javascript:;"></a>
+      </div>
+      <router-view :classify="classify" :showAll="showAll"></router-view>
     </div>
-    <router-view :classify="classify"></router-view>
+    <div class="allGoods" v-if="!isShow">
+        <allGoods :showAll="showAll"/>
+    </div>
   </div>
 </template>
 <script>
   import {mapState} from 'vuex'
-
+  import allGoods from '../../components/allGoods/allGoods.vue'
   export default {
+    data () {
+      return {
+        isShow: true
+      }
+    },
     mounted () {
       this.$store.dispatch('reqClassify', this.jumpTo)
     },
     methods: {
       jumpTo () {
         this.$router.push('/classify/category')
+      },
+      showAll () {
+        this.isShow = !this.isShow
       }
     },
     computed: {
       ...mapState(['classify'])
+    },
+    components: {
+      allGoods
     }
   }
 </script>
@@ -65,4 +81,8 @@
       background url("../firstPage/search.png") no-repeat
       background-size 100%
 
+  .allGoods
+    position relative
+    width 100%
+    height 100%
 </style>

@@ -1,4 +1,4 @@
-import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS, REQ_CLASSIFY} from './types'
+import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS, REQ_CLASSIFY, REQ_VERIFICATION_CODE, REQ_LOGIN, REQ_ALL_GOODS} from './types'
 
 export default {
   [REQ_DOG_MESSAGE] (state, {dogs}) {
@@ -12,5 +12,14 @@ export default {
   },
   [REQ_CLASSIFY] (state, {classify}) {
     state.classify = classify
+  },
+  [REQ_VERIFICATION_CODE] (state, {users}) {
+    state.users = users
+  },
+  [REQ_LOGIN] (state, {users}) {
+    state.users.code = users.code
+  },
+  [REQ_ALL_GOODS] (state, {allGoods}) {
+    state.allGoods = allGoods
   }
 }

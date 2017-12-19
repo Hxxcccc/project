@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header v-if="isLogin">
+    <header v-show="isLogin && !isUserCenter">
       <div class="login_bg">
         <div class="head-top">
           <a href="javascript:;" class="page-top"><</a>
@@ -12,7 +12,7 @@
           <img src="//static.epetbar.com/mpet/images/login/logo.png">
         </div>
         <div class="es_por">
-          <div @click="loginOrRegister(0)" :class= {justYou:loginIn[0]}>
+          <div @click="loginOrRegister(0)" :class= {justYou:loginIn[0]} >
             <a href="javascript:;">普通登录</a>
             <span class="san"></span>
           </div>
@@ -35,7 +35,7 @@
       <div v-show="loginIn[1]">
         <div class="login">
           <span class="mNameIco phone"></span>
-          <input type="text" placeholder="已注册的手机号" class="username" name="username">
+          <input type="text" placeholder="已注册的手机号" class="username" ref="resPhone" name="username">
         </div>
         <div class="login">
           <span class="mNameIco icon" ></span>
@@ -44,7 +44,8 @@
         </div>
         <div class="login">
           <span class="mNameIco icon" ></span>
-          <input type="text" placeholder="动态密码" class="username"name="username">
+          <input type="text" placeholder="动态密码" class="username"  ref='dynamic' name="username">
+          <a href="javascript:;" @click="sendCode(false)" class="get_phonepass">获取动态密码</a>
         </div>
       </div>
       <div class="forget">
@@ -59,17 +60,22 @@
         <a href="javascript:;"><img src="//static.epetbar.com/mpet/images/login/login_ico2.png" alt=""></a>
       </div>
     </header>
-    <div class="login" v-if="!isLogin">
+    <div class="login" v-show="!isLogin && !isUserCenter">
       <span class="mNameIco phone"></span>
       <input type="text" placeholder="请输入手机号码" class="phoneNum" ref="phoneNum" @input="hasNumber" name="phone">
-      <div class="next" :class={hasNum:isNum} @click="sendCode">
+      <div class="next" :class={hasNum:isNum} @click="sendCode(true)">
         <a href="javascript:;">下一步</a>
       </div>
+    </div>
+    <div class="userCenter" v-if="isUserCenter">
+      <h2>这里就是用户中心~~~~点击下面的按钮退出吧</h2>
+      <button @click="comeBack">退出</button>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapState} from 'vuex'
   import '../../common/js/jquery.min'
   import '../../common/js/verify'
   export default {
@@ -77,27 +83,13 @@
       return {
         loginIn: [true, false],
         isNum: false,
-        isLogin: true
+        isLogin: true,
+        isUserCenter: false,
+        numberPh: '17688317990'
       }
     },
     mounted () {
-      $('#mpanel1').codeVerify({
-        type : 1,
-        width : '3.7rem',
-        height : '1.8rem',
-        fontSize : '1rem',
-        codeLength : 4,
-        btnId : 'check-btn',
-        ready : function() {
-        },
-        success : function(obj) {
-          alert('验证匹配！');
-          obj.refresh();
-        },
-        error : function() {
-          alert('验证码不匹配！');
-        }
-      })
+      this.myVertify(this.numberPh)
     },
     methods: {
       loginOrRegister (index) {
@@ -117,9 +109,59 @@
       resgister () {
         this.isLogin = false
       },
-      sendCode () {
-        this.$store.dispatch('reqVerificationCode')
+      sendCode (flag) {
+          if(flag && this.isNum){
+            var number = this.$refs.phoneNum.value.trim()
+            console.log(this.$refs.phoneNum.value);
+            this.$store.dispatch('reqVerificationCode', number)
+            this.numberPh = number
+            this.$refs.phoneNum.value = ''
+          }else {
+            var number = this.$refs.resPhone.value.trim()
+            console.log(this.$refs.resPhone.value);
+            this.$store.dispatch('reqVerificationCode', number)
+            this.numberPh = number
+          }
+      },
+      comeBack () {
+        this.isUserCenter = false
+      },
+      myVertify (numberPh) {
+        $('#mpanel1').codeVerify({
+          type : 1,
+          width : '3.7rem',
+          height : '1.8rem',
+          fontSize : '1rem',
+          codeLength : 4,
+          btnId : 'check-btn',
+          ready : () => {
+          },
+          success : (obj) => {
+            if(this.users && this.users.phone == numberPh && this.users.code == this.$refs.dynamic.value){
+              this.$store.dispatch('reqLogin', this.users)
+              this.isUserCenter = true
+              this.$refs.resPhone.value = ''
+              this.$refs.dynamic.value = ''
+              console.log('验证匹配！');
+            }else {
+              console.log(this.$refs.dynamic.value);
+              console.log(this.users.code);
+              console.log(this.users.phone);
+              console.log(numberPh);
+              alert('手机号不匹配！');
+            }
+            setTimeout( () => {
+              obj.refresh();
+            },1000)
+          },
+          error : function() {
+            alert('验证码不匹配！');
+          }
+        })
       }
+    },
+    computed: {
+      ...mapState(['users'])
     }
   }
 </script>
@@ -222,6 +264,18 @@
           height 1rem
           background url("https://static.epetbar.com/mpet/images/ico4.png") no-repeat
           background-size 100% 100%
+      .get_phonepass
+        background #fff
+        color #ff4259
+        border 1px solid #eb4c33
+        position absolute
+        right .2rem
+        font-size .5rem
+        top 0.8em
+        border-radius .1rem
+        width 3.5rem
+        text-align center
+        padding 0.3rem 0
       .username
         position absolute
         top .1rem
@@ -237,10 +291,17 @@
           line-height 2rem
       #mpanel1
         position absolute
+        z-index 5
         right 0.2rem
         top .2rem
         width 3.7rem
         height 1.8rem
+        .verify-input-area
+          width 0
+          height 0
+        .verify-change-area
+          width 0
+          height 0
     .forget
       position absolute
       right .8rem
@@ -296,6 +357,7 @@
       width .5rem
       background url("https://static.epetbar.com/mpet/images/ico1.png") no-repeat
       background-size 100% 100%
+
     .phoneNum
       position absolute
       top .1rem

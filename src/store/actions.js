@@ -1,6 +1,13 @@
 import axios from 'axios'
-import sendCode from '../api/sms_util'
-import {REQ_DOG_MESSAGE, REQ_SURPRISE, REQ_DOG_FOODS, REQ_CLASSIFY} from './types'
+import {
+  REQ_DOG_MESSAGE,
+  REQ_SURPRISE,
+  REQ_DOG_FOODS,
+  REQ_CLASSIFY,
+  REQ_VERIFICATION_CODE,
+  REQ_LOGIN,
+  REQ_ALL_GOODS
+} from './types'
 
 export default {
   reqDogMessage ({commit}, callback) {
@@ -46,11 +53,39 @@ export default {
         }
       })
   },
-  reqVerificationCode ({commit}) {
-
-    sendCode('17688317990')
+  reqVerificationCode ({commit}, phone) {
+    axios.get('/api/sendcode?phone='+phone)
       .then(request => {
-        console.log(request);
+        let users = request.data
+        console.log(users);
+        commit(REQ_VERIFICATION_CODE, {users})
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  },
+  reqLogin ({commit}, users) {
+    axios.post('/api/login', {
+      phone: users.phone,
+      code: users.code
+    })
+      .then(request => {
+        let data = request.data
+        commit(REQ_LOGIN, {data})
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  },
+  reqAllGoods ({commit}, callback) {
+    axios.get('/api/allGoods')
+      .then(response => {
+        const result = response.data
+        if (result.code === 0) {
+          const allGoods = result.data
+          commit(REQ_ALL_GOODS, {allGoods})
+          callback && callback()
+        }
       })
       .catch(error => {
         console.log(error);

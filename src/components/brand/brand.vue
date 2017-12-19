@@ -24,6 +24,7 @@
         </div>
       </div>
     </div>
+    <div class="all" @click="setShow">全部</div>
   </div>
 </template>
 
@@ -31,13 +32,19 @@
   import BScroll from 'better-scroll'
   export default {
     props: {
-      classify: Object
+      classify: Object,
+      showAll: Function
     },
     mounted () {
       if(this.classify){
         this.scroll = new BScroll(this.$refs.container, {
           click: true
         })
+      }
+    },
+    methods: {
+      setShow () {
+        this.showAll()
       }
     },
     watch: {
@@ -60,45 +67,58 @@
     left 0
     bottom 2rem
     right 0
-  .brand
-    width 100%
-    height 100%
-    background #fff
-    margin .2rem 0
-    .title
+    .brand
       width 100%
-      height 2.5rem
-      font-size .5rem
-      text-align center
-      line-height 2.5rem
-      color #999
-    .list
-      width 100%
-      ul
-        clearFix()
-        >li
-          float left
-          width 33%
-          height 5.4rem
-          box-sizing border-box
-          padding 0 .3rem .3rem
-          text-align center
-          div
-            width 100%
+      height 100%
+      background #fff
+      margin .2rem 0
+      .title
+        width 100%
+        height 2.5rem
+        font-size .5rem
+        text-align center
+        line-height 2.5rem
+        color #999
+      .list
+        width 100%
+        ul
+          clearFix()
+          >li
+            float left
+            width 33%
+            height 5.4rem
             box-sizing border-box
-            padding .3rem
-            border 1px solid #f3f4f5
-            height 2.5rem
-            >img
+            padding 0 .3rem .3rem
+            text-align center
+            div
               width 100%
-              height 100%
-          .name
-            margin .3rem 0
-            width 100%
-            font-size .5rem
-            color #333
-          .address
-            width 100%
-            font-size .5rem
-            color #999
+              box-sizing border-box
+              padding .3rem
+              border 1px solid #f3f4f5
+              height 2.5rem
+              >img
+                width 100%
+                height 100%
+            .name
+              margin .3rem 0
+              width 100%
+              font-size .5rem
+              color #333
+            .address
+              width 100%
+              font-size .5rem
+              color #999
+    .all
+      position fixed
+      right 0.5rem
+      bottom 3rem
+      width 1.6rem
+      font-size .5rem
+      line-height 1.6rem
+      text-align center
+      height 1.6rem
+      color #fff
+      background rgba(0,0,0,.4)
+      border-radius 50%
+
 </style>
