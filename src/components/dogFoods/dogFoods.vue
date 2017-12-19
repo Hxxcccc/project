@@ -112,7 +112,8 @@
           this.scroll = new BScroll(this.$refs.dogFoods, {
             click: true,
             probeType: 3,
-            scrollbar: true
+            scrollbar: true,
+            useTransition: false
           })
           this.scroll.on('scroll', (event) => {
             //假设头部高度为80PX, 不想再去通信了~~~
