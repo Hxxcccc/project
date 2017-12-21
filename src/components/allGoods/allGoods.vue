@@ -12,7 +12,7 @@
             <li class="lis" v-for="(item, index) in list.list" :key="index">
               <a href="javascript:;">
                 <div class="logo">
-                  <img :src="item.logo" alt="logo">
+                  <img v-lazy="item.logo" alt="logo">
                 </div>
                 <div class="text">
                   <p class="name">
@@ -60,11 +60,9 @@
         this.$nextTick(() => {
           this.scroll = new BScroll(this.$refs.container, {
             click: true,
-            probeType: 3,
-            scrollbar: true
+            probeType: 3
           })
           this.scroll.on('scroll', (event) => {
-            //假设头部高度为80PX, 不想再去通信了~~~
             for (let i=0,length=this.allHeight.length;i<length;i++){
               if (this.allHeight[i] >= -event.y) {
                 this.isAct = []
@@ -162,7 +160,7 @@
                   font-size .5rem
   .letters
     position fixed
-    right: .8rem
+    right: .9rem
     top 0
     bottom 0
     margin auto 0
@@ -172,7 +170,7 @@
       transform translateY(-50%)
       .letter
         width: .5rem
-        height: .6rem
+        height: .7rem
         text-align center
         &.active
           >span

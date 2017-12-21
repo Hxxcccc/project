@@ -327,7 +327,7 @@
     .site
       position absolute
       width 100%
-      height 5rem
+      height 4.6rem
       text-align center
       bottom 2rem
       p

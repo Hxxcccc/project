@@ -1,7 +1,7 @@
 <template>
   <div>
     <section id="firstPage">
-      <header class="header border-1px">
+      <header ref="header" class="header border-1px">
         <div class="headerNav">
           <div class="headerTitle">
             <a href="javascript:;">
@@ -37,7 +37,7 @@
         </div>
       </header>
       <keep-alive>
-        <router-view></router-view>
+        <router-view :height="height"></router-view>
       </keep-alive>
     </section>
   </div>
@@ -49,19 +49,16 @@
   export default {
     data () {
       return {
-        classList: [true, false, false, false, false, false, false]
+        classList: [],
+        height: 0
       }
     },
     mounted () {
       this.$router.push('/firstPage/content')
       if (this.dogs.menus) {
-        this.$nextTick(() => {
-          this.scroll = new BScroll(this.$refs.findNav, {
-            click: true,
-            scrollX:true
-          })
-        })
+        this.newScroller()
       }
+      this.height = this.$refs.header.offsetHeight
     },
     methods: {
       setClass (cIndex) {
@@ -73,11 +70,32 @@
           }
         })
       },
+      newScroller () {
+        this.$nextTick(() => {
+          this.scroll = new BScroll(this.$refs.findNav, {
+            click: true,
+            scrollX:true
+          })
+          this.dogs.menus.forEach((item, index) => {
+            if (index === 0) {
+              this.classList.push(true)
+            } else {
+              this.classList.push(false)
+            }
+          })
+        })
+      }
     },
     computed: {
       ...mapState(['dogs', 'surprise'])
     },
-
+    watch: {
+      dogs () {
+        if (this.dogs.menus && !this.scroll) {
+          this.newScroller()
+        }
+      }
+    }
   }
 </script>
 

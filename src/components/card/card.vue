@@ -4,7 +4,7 @@
       <li v-for="(item, index) in cards.value" :key="index">
         <a href="javascript:;">
           <div class="imgBox">
-            <img :src="item.cover.image">
+            <img v-lazy="item.cover.image">
             <span class="cmallPlayIco"></span>
           </div>
           <div class="title">

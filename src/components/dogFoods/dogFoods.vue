@@ -38,7 +38,7 @@
               <li v-for="(li, index) in setListParam">
                 <div class="index-listimg">
                   <a href="javascript:;">
-                    <img class="image" :src="li.photo">
+                    <img class="image" v-lazy="li.photo">
                     <div class="coutryimg">
                       <img :src="li.country_photo">
                     </div>
@@ -79,15 +79,19 @@
   import BScroll from 'better-scroll'
 
   export default {
+    props: {
+      height: Number
+    },
     data () {
       return {
-        isShow: [true, false, false, false],
+        isShow: [],
         param: 5,
-        classList: [true, false, false, false, false, false]
+        classList: []
       }
     },
     mounted () {
       this.$store.dispatch('reqDogFoods', this.getScroll)
+
     },
     methods: {
       getCategory (cIndex) {
@@ -100,6 +104,20 @@
         })
       },
       getScroll () {
+        this.dogFoods.datas[this.dogFoods.datas.length-1].menus.forEach((item, index) => {
+          if (index === 0) {
+            this.classList.push(true)
+          } else {
+            this.classList.push(false)
+          }
+        })
+        this.dogFoods.datas[1].data.categorys.forEach((item, index) => {
+          if (index === 0) {
+            this.isShow.push(true)
+          } else {
+            this.isShow.push(false)
+          }
+        })
         if (!this.scrollX) {
           this.$nextTick(() => {
             this.scrollX = new BScroll(this.$refs.scrollBlock, {
@@ -118,9 +136,9 @@
           this.scroll.on('scroll', (event) => {
             //假设头部高度为80PX, 不想再去通信了~~~
             if (this.$refs.goodslist) {
-              if(this.$refs.goodslist.getBoundingClientRect().top<= 80){
+              if(this.$refs.goodslist.getBoundingClientRect().top<= this.height){
                 this.$refs.scrollBlock.className = 'scroll-block border-1px floatBanner'
-                this.$refs.scrollBlock.style.top =  -event.y + 'px'
+                this.$refs.scrollBlock.style.top =  -event.y-2 + 'px'
               }else {
                 this.$refs.scrollBlock.className = 'scroll-block border-1px'
                 this.$refs.scrollBlock.style.top = 0
@@ -145,11 +163,11 @@
       setListParam () {
         if (this.dogFoods.datas) {
           return this.dogFoods.datas[this.dogFoods.datas.length-1].list.filter((item, index) => {
-            if(this.param ===5){
+            if (this.param ===5) {
               return true
-            }else if(item.cateid === this.param){
+            } else if (item.cateid === this.param) {
               return true
-            }else {
+            } else {
               return false
             }
           })
@@ -233,12 +251,12 @@
         .brands-list
           clearFix()
           width 24rem
-          height 1rem
+          height 1.1rem
           > li
             float left
             margin 0 .4rem
             width 3.2rem
-            height 1rem
+            height 1.1rem
             div
               width 100%
               height 100%

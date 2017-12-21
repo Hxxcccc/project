@@ -25,16 +25,23 @@
     data () {
       return {
         cateListIndex: 1,
-        classList: [true, false, false, false, false, false, false, false, false, false, false, false, false]
+        classList: []
       }
     },
     mounted () {
-      if(this.classify){
+      if(this.classify.categorys){
         this.setScroll()
       }
     },
     methods: {
       setScroll () {
+        this.classify.categorys.forEach((item, index) => {
+          if (index === 0) {
+            this.classList.push(true)
+          } else {
+            this.classList.push(false)
+          }
+        })
         this.$nextTick(() => {
           this.scroll = new BScroll(this.$refs.leftBar, {
             click: true
@@ -60,7 +67,7 @@
     },
     watch: {
       classify () {
-        if(this.classify && !this.scroll){
+        if(this.classify.categorys && !this.scroll){
           this.setScroll()
         }
       }

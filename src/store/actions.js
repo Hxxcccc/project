@@ -1,4 +1,4 @@
-import axios from 'axios'
+import {getUrl, postUrl} from '../api'
 import {
   REQ_DOG_MESSAGE,
   REQ_SURPRISE,
@@ -11,7 +11,7 @@ import {
 
 export default {
   reqDogMessage ({commit}, callback) {
-    axios.get('/api/dog')
+    getUrl('/api/dog')
       .then((response) => {
         const result = response.data
         if (result.code === 0) {
@@ -22,7 +22,7 @@ export default {
       })
   },
   reqSurprise ({commit}) {
-    axios.get('/api/surprise')
+    getUrl('/api/surprise')
       .then((response) => {
         const result = response.data
         if (result.code === 0) {
@@ -32,7 +32,7 @@ export default {
       })
   },
   reqDogFoods ({commit}, callback) {
-    axios.get('/api/dogFoods')
+    getUrl('/api/dogFoods')
       .then((response) => {
         const result = response.data
         if (result.code === 0) {
@@ -43,7 +43,7 @@ export default {
       })
   },
   reqClassify ({commit}, callback) {
-    axios.get('/api/classify')
+    getUrl('/api/classify')
       .then((response) => {
         const result = response.data
         if (result.code === 0) {
@@ -54,7 +54,7 @@ export default {
       })
   },
   reqVerificationCode ({commit}, phone) {
-    axios.get('/api/sendcode?phone='+phone)
+    getUrl('/api/sendcode?phone='+phone)
       .then(request => {
         let users = request.data
         console.log(users);
@@ -65,7 +65,7 @@ export default {
       })
   },
   reqLogin ({commit}, users) {
-    axios.post('/api/login', {
+    postUrl('/api/login', {
       phone: users.phone,
       code: users.code
     })
@@ -78,7 +78,7 @@ export default {
       })
   },
   reqAllGoods ({commit}, callback) {
-    axios.get('/api/allGoods')
+    getUrl('/api/allGoods')
       .then(response => {
         const result = response.data
         if (result.code === 0) {

@@ -5,22 +5,22 @@
     </div>
     <ul class="footerNav border-1px" ref="ul">
       <li class="firstPage">
-        <router-link to="/firstPage"  @click.stop="">
+        <router-link to="/firstPage">
           <span></span>
         </router-link>
       </li>
       <li class="classify">
-        <router-link to="/classify"  @click.stop="">
+        <router-link to="/classify">
           <span></span>
         </router-link>
       </li>
       <li class="shopping">
-        <router-link to="/shopping" @click.stop="">
+        <router-link to="/shopping">
           <span></span>
         </router-link>
       </li>
       <li class="userCenter">
-        <router-link to="/userCenter"  @click.stop="">
+        <router-link to="/userCenter">
           <span></span>
         </router-link>
       </li>
@@ -33,10 +33,6 @@
   export default {
     name: 'app',
     mounted () {
-//      this.$refs.ul.addEventListener('touchstart', function (e) {
-//        e = e || event
-//        e.preventDefault()
-//      })
       this.$store.dispatch('reqDogMessage')
     }
   }
@@ -65,6 +61,9 @@
           height 100%
         &.firstPage
           text-align center
+          >.active
+            >span
+              background-position 68% -1%
           span
             display inline-block
             width 2rem
@@ -75,6 +74,9 @@
             background-size 550%
         &.classify
           text-align center
+          >.active
+            >span
+              background-position 68% 33%
           span
             display inline-block
             width 2rem
@@ -85,6 +87,9 @@
             background-size 550%
         &.shopping
           text-align center
+          >.active
+            >span
+              background-position 68% 67%
           span
             display inline-block
             width 2rem
@@ -95,6 +100,9 @@
             background-size 550%
         &.userCenter
           text-align center
+          >.active
+            >span
+              background-position 68% 101%
           span
             display inline-block
             width 2rem
